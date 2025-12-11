@@ -1,0 +1,160 @@
+import React from 'react';
+import './CourseSections.css';
+
+const CourseSections: React.FC = () => {
+  return (
+    <div className="course-shell">
+      <section className="section block" id="about-course">
+        <div className="section__heading">
+          <p className="eyebrow">About the Course</p>
+          <h2 className="section__title">NASA-inspired Freifach</h2>
+          <p className="section__subtitle">
+            Explore astronomy, rockets, robotics, physics, and mission planning through NASA-style labs. Students build models, run simulations, code data pipelines, and collaborate like a real flight team.
+          </p>
+        </div>
+        <div className="section__grid two">
+          <div className="card glass">
+            <h3>What You Will Do</h3>
+            <ul>
+              <li>Hands-on experiments and microgravity demos</li>
+              <li>Mission simulations with roles and flight rules</li>
+              <li>Research sprints on astronomy and space systems</li>
+              <li>Team builds: rockets, rovers, and payload mockups</li>
+            </ul>
+          </div>
+          <div className="card glass">
+            <h3>Why It Matters</h3>
+            <ul>
+              <li>Learn NASA systems thinking and crew teamwork</li>
+              <li>Blend physics, coding, and design for real outcomes</li>
+              <li>Practice communication, go/no-go readiness, and briefings</li>
+              <li>Connect STEM skills to real missions and careers</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="section block" id="projects">
+        <div className="section__heading">
+          <p className="eyebrow">Projects & Missions</p>
+          <h2 className="section__title">Studio & Lab Highlights</h2>
+          <p className="section__subtitle">Model rockets, rover drills, telescope nights, coding tasks, and mission sims based on NASA challenges.</p>
+        </div>
+        <div className="section__grid three">
+          {[
+            { title: 'Model Rocket Campaign', desc: 'Design, simulate, and fly small launchers with data capture.' },
+            { title: 'Rover Nav Lab', desc: 'Obstacle avoidance, sensor fusion, and surface ops drills.' },
+            { title: 'Mission Control Sim', desc: 'Roles, comm loops, and anomaly response practice.' },
+            { title: 'Astro Research', desc: 'Spectra, exoplanets, and orbital mechanics mini-projects.' },
+            { title: 'Data & Coding', desc: 'Python notebooks for telemetry parsing and visualization.' },
+            { title: 'Habitat Concepts', desc: 'Closed-loop life support sketches and rapid prototyping.' },
+          ].map(item => (
+            <div key={item.title} className="card glass">
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section block" id="team">
+        <div className="section__heading">
+          <p className="eyebrow">Team</p>
+          <h2 className="section__title">Guides & Mentors</h2>
+          <p className="section__subtitle">Educators with a love for space, STEM, and student-led discovery.</p>
+        </div>
+        <div className="section__grid two">
+          {[
+            { name: 'Lead Instructor', focus: 'Astrophysics, mission design, and data pipelines.' },
+            { name: 'Lab Mentor', focus: 'Robotics, fabrication, and launch safety.' },
+          ].map(person => (
+            <div key={person.name} className="card glass">
+              <h3>{person.name}</h3>
+              <p>{person.focus}</p>
+              <div className="tag">STEM Mentor</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section block" id="schedule">
+        <div className="section__heading">
+          <p className="eyebrow">Schedule</p>
+          <h2 className="section__title">Sessions & Events</h2>
+          <p className="section__subtitle">Weekly meetups, build nights, and milestone launches.</p>
+        </div>
+        <div className="schedule">
+          <div className="schedule__row">
+            <span>Weekly Lab</span>
+            <span>Wednesdays · 16:00 – 18:00</span>
+          </div>
+          <div className="schedule__row">
+            <span>Build & Test</span>
+            <span>Fridays · 15:30 – 17:00</span>
+          </div>
+          <div className="schedule__row">
+            <span>Mission Sim</span>
+            <span>Monthly · Announced in class</span>
+          </div>
+          <div className="schedule__row">
+            <span>Launch Day</span>
+            <span>Quarterly · Weather permitting</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="section block" id="resources">
+        <div className="section__heading">
+          <p className="eyebrow">Resources</p>
+          <h2 className="section__title">NASA Links & Tools</h2>
+          <p className="section__subtitle">Curated reads, videos, and toolkits to deepen your build and research sprints.</p>
+        </div>
+        <div className="section__grid two">
+          <div className="card glass">
+            <h3>Learn</h3>
+            <ul>
+              <li><a href="https://www.nasa.gov" target="_blank" rel="noreferrer">NASA Missions Portal</a></li>
+              <li><a href="https://www.jpl.nasa.gov/edu/" target="_blank" rel="noreferrer">JPL Education</a></li>
+              <li><a href="https://eyes.nasa.gov/" target="_blank" rel="noreferrer">NASA Eyes Simulations</a></li>
+            </ul>
+          </div>
+          <div className="card glass">
+            <h3>Build</h3>
+            <ul>
+              <li><a href="https://openmct.nasa.gov/" target="_blank" rel="noreferrer">Open MCT</a></li>
+              <li><a href="https://www.nasa.gov/stem" target="_blank" rel="noreferrer">STEM Resources</a></li>
+              <li><a href="https://solarsystem.nasa.gov/basics/" target="_blank" rel="noreferrer">Solar System Basics</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="section block" id="gallery">
+        <div className="section__heading">
+          <p className="eyebrow">Gallery</p>
+          <h2 className="section__title">Builds & Moments</h2>
+          <p className="section__subtitle">Snapshots from labs, launch pads, and mission control sims.</p>
+        </div>
+        <div className="gallery">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="gallery__item" aria-label={`Gallery placeholder ${i + 1}`}>Cosmic Capture</div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section block join" id="join">
+        <div className="section__heading">
+          <p className="eyebrow">Join the Class</p>
+          <h2 className="section__title">Ready for Launch?</h2>
+          <p className="section__subtitle">Sign up to receive details, prerequisites, and the next mission briefing.</p>
+        </div>
+        <div className="join__cta">
+          <a className="cta-button" href="mailto:space-class@example.com">Request Info</a>
+          <a className="cta-button ghost" href="#schedule">View Schedule</a>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default CourseSections;
