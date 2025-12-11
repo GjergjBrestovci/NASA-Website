@@ -1,5 +1,6 @@
 import React from 'react';
 import './CourseSections.css';
+import ChromaGrid from './ChromaGrid';
 
 const CourseSections: React.FC = () => {
   return (
@@ -63,18 +64,38 @@ const CourseSections: React.FC = () => {
           <h2 className="section__title">Guides & Mentors</h2>
           <p className="section__subtitle">Educators with a love for space, STEM, and student-led discovery.</p>
         </div>
-        <div className="section__grid two">
-          {[
-            { name: 'Lead Instructor', focus: 'Astrophysics, mission design, and data pipelines.' },
-            { name: 'Lab Mentor', focus: 'Robotics, fabrication, and launch safety.' },
-          ].map(person => (
-            <div key={person.name} className="card glass">
-              <h3>{person.name}</h3>
-              <p>{person.focus}</p>
-              <div className="tag">STEM Mentor</div>
-            </div>
-          ))}
-        </div>
+        <ChromaGrid
+          className="team-grid"
+          items={[
+            {
+              image: 'https://images.unsplash.com/photo-1506792006437-256b665541e3?auto=format&fit=crop&w=900&q=80',
+              title: 'Amira Solano',
+              subtitle: 'Astrophysics, mission design, and flight-readiness drills.',
+              handle: '@amira.sol',
+              location: 'Zurich · Lead Instructor',
+              borderColor: '#7df9ff',
+              gradient: 'linear-gradient(160deg,#0b1b38,#1a4fd0)',
+            },
+            {
+              image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80',
+              title: 'Lena Ortiz',
+              subtitle: 'Robotics, fabrication labs, and launch safety protocols.',
+              handle: '@lena.builds',
+              location: 'Bern · Lab Mentor',
+              borderColor: '#12d8fa',
+              gradient: 'linear-gradient(200deg,#04142a,#0fa3b1)',
+            },
+            {
+              image: 'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?auto=format&fit=crop&w=900&q=80',
+              title: 'Noah Richter',
+              subtitle: 'Data pipelines, flight software, and telemetry visualization.',
+              handle: '@noahr.codes',
+              location: 'Geneva · Data Mentor',
+              borderColor: '#d946ef',
+              gradient: 'linear-gradient(145deg,#120b2e,#b832f0)',
+            },
+          ]}
+        />
       </section>
 
       <section className="section block" id="schedule">
