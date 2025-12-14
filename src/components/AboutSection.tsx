@@ -22,9 +22,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({ disableAnimations = false }
           enableStars={!disableAnimations}
           enableSpotlight={!disableAnimations}
           enableBorderGlow={!disableAnimations}
-          enableTilt={!disableAnimations}
-          enableMagnetism={!disableAnimations}
-          clickEffect={!disableAnimations}
+          enableTilt={false}
+          enableMagnetism={false}
+          clickEffect={false}
           disableAnimations={disableAnimations}
           spotlightRadius={disableAnimations ? 220 : 300}
           particleCount={disableAnimations ? 6 : 10}
