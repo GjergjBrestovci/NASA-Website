@@ -66,6 +66,7 @@ const CourseSections: React.FC = () => {
         </div>
         <ChromaGrid
           className="team-grid"
+          radius={720}
           items={[
             {
               image: 'https://images.unsplash.com/photo-1506792006437-256b665541e3?auto=format&fit=crop&w=900&q=80',

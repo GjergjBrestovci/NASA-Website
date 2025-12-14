@@ -1,11 +1,10 @@
 .chroma-grid {
   position: relative;
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
   min-height: 320px;
   isolation: isolate;
 }
@@ -14,7 +13,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
   min-height: 420px;
   border-radius: 20px;
   overflow: hidden;
@@ -99,8 +98,8 @@
   inset: 0;
   pointer-events: none;
   z-index: 3;
-  backdrop-filter: grayscale(1) brightness(0.78);
-  -webkit-backdrop-filter: grayscale(1) brightness(0.78);
+  backdrop-filter: grayscale(1) brightness(0.9);
+  -webkit-backdrop-filter: grayscale(1) brightness(0.9);
   background: rgba(0, 0, 0, 0.001);
 }
 

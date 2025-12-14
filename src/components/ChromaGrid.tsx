@@ -27,7 +27,7 @@ type SetterFn = (v: number | string) => void;
 const ChromaGrid: React.FC<ChromaGridProps> = ({
   items,
   className = '',
-  radius = 300,
+  radius = 520,
   damping = 0.45,
   fadeOut = 0.6,
   ease = 'power3.out',
@@ -115,6 +115,13 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
     const rect = c.getBoundingClientRect();
     c.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
     c.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+
+    // Also steer the shared mask toward this card so edge cards react the same as center cards.
+    const gridRect = rootRef.current?.getBoundingClientRect();
+    if (gridRect) {
+      moveTo(e.clientX - gridRect.left, e.clientY - gridRect.top);
+      gsap.to(fadeRef.current, { opacity: 0, duration: 0.2, overwrite: true });
+    }
   };
 
   return (
