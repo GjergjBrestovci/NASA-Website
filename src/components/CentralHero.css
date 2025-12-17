@@ -54,9 +54,9 @@
 }
 
 .central-hero__lead {
-  margin: 1rem 0 0;
+  margin: 1rem auto 0;
   color: #f9fbff;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1.8;
   max-width: 680px;
   text-shadow:
