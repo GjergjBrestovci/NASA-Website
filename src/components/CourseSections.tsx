@@ -1,6 +1,7 @@
 import React from 'react';
 import './CourseSections.css';
 import ChromaGrid from './ChromaGrid';
+import SpotlightCard from './SpotlightCard';
 
 const CourseSections: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const CourseSections: React.FC = () => {
           </p>
         </div>
         <div className="section__grid two">
-          <div className="card glass">
+          <SpotlightCard className="card glass" spotlightColor="rgba(125, 249, 255, 0.2)">
             <h3>What You Will Do</h3>
             <ul>
               <li>Hands-on experiments and microgravity demos</li>
@@ -22,8 +23,8 @@ const CourseSections: React.FC = () => {
               <li>Research sprints on astronomy and space systems</li>
               <li>Team builds: rockets, rovers, and payload mockups</li>
             </ul>
-          </div>
-          <div className="card glass">
+          </SpotlightCard>
+          <SpotlightCard className="card glass" spotlightColor="rgba(125, 249, 255, 0.2)">
             <h3>Why It Matters</h3>
             <ul>
               <li>Learn NASA systems thinking and crew teamwork</li>
@@ -31,7 +32,7 @@ const CourseSections: React.FC = () => {
               <li>Practice communication, go/no-go readiness, and briefings</li>
               <li>Connect STEM skills to real missions and careers</li>
             </ul>
-          </div>
+          </SpotlightCard>
         </div>
       </section>
 
@@ -50,10 +51,10 @@ const CourseSections: React.FC = () => {
             { title: 'Data & Coding', desc: 'Python notebooks for telemetry parsing and visualization.' },
             { title: 'Habitat Concepts', desc: 'Closed-loop life support sketches and rapid prototyping.' },
           ].map(item => (
-            <div key={item.title} className="card glass">
+            <SpotlightCard key={item.title} className="card glass" spotlightColor="rgba(123, 92, 255, 0.18)">
               <h3>{item.title}</h3>
               <p>{item.desc}</p>
-            </div>
+            </SpotlightCard>
           ))}
         </div>
       </section>

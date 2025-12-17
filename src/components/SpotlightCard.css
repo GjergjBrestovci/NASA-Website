@@ -1,0 +1,28 @@
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.spotlight-card__content {
+  position: relative;
+  z-index: 1;
+}
+
+.spotlight-card:focus-within .spotlight-card__glow,
+.spotlight-card:hover .spotlight-card__glow {
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  .spotlight-card {
+    border-radius: inherit;
+  }
+}
