@@ -1,11 +1,13 @@
 .pill-nav-shell {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   pointer-events: none;
-  padding-top: 16px;
+  padding: 12px 16px;
   z-index: 1000;
 }
 
@@ -49,7 +51,7 @@
 }
 
 .pill-nav-items {
-  display: none;
+  display: inline-flex;
   align-items: center;
   height: 42px;
   background: var(--base, #000);
@@ -144,18 +146,7 @@
 }
 
 .pill-nav-hamburger {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: var(--base, #000);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  display: none;
 }
 
 .pill-nav-hamburger .hamburger-line {
@@ -171,71 +162,9 @@
   box-shadow: 0 12px 28px rgba(10, 6, 24, 0.3);
 }
 
-.pill-nav-mobile {
-  position: absolute;
-  top: 68px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  max-width: 320px;
-  background: rgba(26, 20, 48, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px);
-  border-radius: 24px;
-  box-shadow: 0 18px 48px rgba(10, 6, 24, 0.4);
-  overflow: hidden;
-  pointer-events: auto;
-  visibility: hidden;
-  opacity: 0;
-}
-
+.pill-nav-mobile,
+.pill-nav-mobile-list,
+.pill-nav-mobile-link,
 .pill-nav-mobile.open {
-  visibility: visible;
-  opacity: 1;
-}
-
-.pill-nav-mobile-list {
-  list-style: none;
-  margin: 0;
-  padding: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.pill-nav-mobile-link {
-  display: block;
-  padding: 14px 18px;
-  color: var(--pill-text, #000);
-  background: var(--pill-bg, #fff);
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  text-transform: uppercase;
-  border-radius: 18px;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.pill-nav-mobile-link:hover {
-  background: var(--base, #000);
-  color: var(--hover-text, #fff);
-}
-
-.pill-nav-mobile-link.is-active {
-  color: var(--hover-text, #fff);
-  background: linear-gradient(135deg, rgba(245, 168, 225, 0.2), rgba(101, 105, 204, 0.15));
-}
-
-@media (min-width: 768px) {
-  .pill-nav-items {
-    display: inline-flex;
-  }
-
-  .pill-nav-hamburger {
-    display: none;
-  }
-
-  .pill-nav-mobile {
-    display: none !important;
-  }
+  display: none !important;
 }

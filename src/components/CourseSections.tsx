@@ -4,6 +4,33 @@ import ChromaGrid from './ChromaGrid';
 import SpotlightCard from './SpotlightCard';
 
 const CourseSections: React.FC = () => {
+  const schedule = [
+    {
+      title: 'Launch Briefing',
+      slot: 'Mondays · 16:00 – 17:00',
+      focus: 'Mission overview, crew roles, and weekly objectives.',
+      status: 'live',
+    },
+    {
+      title: 'Build & Test Lab',
+      slot: 'Wednesdays · 16:00 – 18:00',
+      focus: 'Hands-on builds, sensor wiring, and code checkpoints.',
+      status: 'upcoming',
+    },
+    {
+      title: 'Flight Readiness Sim',
+      slot: 'Fridays · 15:30 – 17:00',
+      focus: 'Comms loops, anomalies, and go/no-go drills.',
+      status: 'upcoming',
+    },
+    {
+      title: 'Launch Day',
+      slot: 'Monthly · Weather permitting',
+      focus: 'Integration, final checks, and launch operations.',
+      status: 'milestone',
+    },
+  ];
+
   return (
     <div className="course-shell">
       <section className="section block" id="about-course">
@@ -107,22 +134,23 @@ const CourseSections: React.FC = () => {
           <p className="section__subtitle">Weekly meetups, build nights, and milestone launches.</p>
         </div>
         <div className="schedule">
-          <div className="schedule__row">
-            <span>Weekly Lab</span>
-            <span>Wednesdays · 16:00 – 18:00</span>
-          </div>
-          <div className="schedule__row">
-            <span>Build & Test</span>
-            <span>Fridays · 15:30 – 17:00</span>
-          </div>
-          <div className="schedule__row">
-            <span>Mission Sim</span>
-            <span>Monthly · Announced in class</span>
-          </div>
-          <div className="schedule__row">
-            <span>Launch Day</span>
-            <span>Quarterly · Weather permitting</span>
-          </div>
+          <div className="schedule__rail" aria-hidden="true" />
+          {schedule.map((item, index) => (
+            <div key={item.title} className={`schedule__card ${item.status}`}>
+              <div className="schedule__marker">
+                <span className="schedule__dot" />
+                <span className="schedule__pulse" />
+                <span className="schedule__index">{index + 1}</span>
+              </div>
+              <div className="schedule__content">
+                <div className="schedule__meta">
+                  <span className="tag">{item.slot}</span>
+                </div>
+                <h3 className="schedule__title">{item.title}</h3>
+                <p className="schedule__focus">{item.focus}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
