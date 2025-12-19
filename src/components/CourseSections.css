@@ -6,8 +6,9 @@
 }
 
 .section {
-  background: transparent;
-  border: 1px solid #1c2237;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.02), transparent 45%),
+    rgba(8, 12, 26, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 28px;
   box-shadow: 0 20px 50px rgba(6, 9, 20, 0.5);
   padding: 2.5rem;
@@ -42,8 +43,8 @@
 
 .section__subtitle {
   margin: 0;
-  color: #d8d2ff;
-  font-size: 1.05rem;
+  color: #f8fbff;
+  font-size: 1.12rem;
   line-height: 1.8;
 }
 
@@ -83,7 +84,8 @@
 
 .card p {
   margin: 0;
-  color: #dcd6ff;
+  color: #f8fbff;
+  font-size: 1.05rem;
 }
 
 .card ul {
@@ -91,7 +93,8 @@
   padding-left: 1rem;
   display: grid;
   gap: 0.35rem;
-  color: #dcd6ff;
+  color: #f8fbff;
+  font-size: 1.05rem;
 }
 
 .card li {
@@ -242,7 +245,8 @@
 
 .schedule__focus {
   margin: 0;
-  color: #d8d2ff;
+  color: #f8fbff;
+  font-size: 1.05rem;
   line-height: 1.6;
 }
 

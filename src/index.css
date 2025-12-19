@@ -26,10 +26,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: radial-gradient(circle at 20% 20%, rgba(101, 105, 204, 0.25), transparent 35%),
-              radial-gradient(circle at 80% 10%, rgba(245, 168, 225, 0.2), transparent 35%),
-              radial-gradient(circle at 50% 80%, rgba(60, 58, 136, 0.25), transparent 45%),
-              #1f1a33;
+  background: radial-gradient(circle at 22% 18%, rgba(101, 105, 204, 0.14), transparent 32%),
+              radial-gradient(circle at 78% 12%, rgba(245, 168, 225, 0.12), transparent 32%),
+              radial-gradient(circle at 50% 78%, rgba(60, 58, 136, 0.14), transparent 42%),
+              #0b0f1f;
   color: var(--text-white);
   overflow-x: hidden;
 }
@@ -69,6 +69,8 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   line-height: 1.6;
+  color: var(--text-white);
+  font-size: 1.05rem;
 }
 
 /* Utility Classes */
