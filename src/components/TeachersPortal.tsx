@@ -1,5 +1,6 @@
 import React, { FormEvent, useEffect, useMemo, useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { Session } from '@supabase/supabase-js';
+import { supabase, supabaseConfigured } from '../supabaseClient';
 import './TeachersPortal.css';
 
 type ScheduleItem = {
@@ -21,7 +22,7 @@ const TeachersPortal: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [items, setItems] = useState<ScheduleItem[]>([]);
-  const [session, setSession] = useState<Awaited<ReturnType<typeof supabase.auth.getSession>>['data']['session']>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -30,6 +31,7 @@ const TeachersPortal: React.FC = () => {
   const isAuthed = useMemo(() => Boolean(session?.access_token), [session]);
 
   useEffect(() => {
+    if (!supabase) return;
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);
@@ -62,6 +64,12 @@ const TeachersPortal: React.FC = () => {
     setMessage(null);
     setError(null);
 
+    if (!supabase) {
+      setLoading(false);
+      setError('Teacher console is not configured yet.');
+      return;
+    }
+
     const { data, error: authError } = await supabase.auth.signInWithPassword({
       email: email.trim(),
       password,
@@ -79,6 +87,10 @@ const TeachersPortal: React.FC = () => {
   };
 
   const handleLogout = async () => {
+    if (!supabase) {
+      setSession(null);
+      return;
+    }
     await supabase.auth.signOut();
     setSession(null);
     setItems([]);
@@ -96,6 +108,10 @@ const TeachersPortal: React.FC = () => {
   };
 
   const saveSchedule = async () => {
+    if (!supabase) {
+      setError('Teacher console is not configured yet.');
+      return;
+    }
     if (!session?.access_token) {
       setError('Log in to save changes.');
       return;
@@ -134,7 +150,13 @@ const TeachersPortal: React.FC = () => {
         <p className="section__subtitle">Log in to edit the shared schedule stored in Supabase. Only teachers can save changes.</p>
       </div>
 
-      {!isAuthed && (
+      {!supabaseConfigured && (
+        <div className="card glass">
+          <p className="teacher-empty">Teacher console is disabled until Supabase is configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.</p>
+        </div>
+      )}
+
+      {supabaseConfigured && !isAuthed && (
         <form className="teacher-form card glass" onSubmit={handleLogin}>
           <div className="form-grid">
             <label>
@@ -153,7 +175,7 @@ const TeachersPortal: React.FC = () => {
         </form>
       )}
 
-      {isAuthed && (
+      {supabaseConfigured && isAuthed && (
         <div className="teacher-panel">
           <div className="teacher-panel__bar">
             <div>
