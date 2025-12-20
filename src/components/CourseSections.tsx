@@ -151,27 +151,29 @@ const CourseSections: React.FC = () => {
         </div>
       </section>
 
-      <section className="section block" id="resources">
+      <section className="section block" id="about-team">
         <div className="section__heading">
-          <p className="eyebrow">Resources</p>
-          <h2 className="section__title">NASA Links & Tools</h2>
-          <p className="section__subtitle">Curated reads, videos, and toolkits to deepen your build and research sprints.</p>
+          <p className="eyebrow">About the Team</p>
+          <h2 className="section__title">How We Work With You</h2>
+          <p className="section__subtitle">A small crew of educators, engineers, and designers focused on hands-on space learning.</p>
         </div>
         <div className="section__grid two">
           <div className="card glass">
-            <h3>Learn</h3>
+            <h3>What to Expect</h3>
             <ul>
-              <li><a href="https://www.nasa.gov" target="_blank" rel="noreferrer">NASA Missions Portal</a></li>
-              <li><a href="https://www.jpl.nasa.gov/edu/" target="_blank" rel="noreferrer">JPL Education</a></li>
-              <li><a href="https://eyes.nasa.gov/" target="_blank" rel="noreferrer">NASA Eyes Simulations</a></li>
+              <li>Mentors who coach like a mission control lead</li>
+              <li>Studios that mix hardware builds, data, and design</li>
+              <li>Clear rubrics, feedback loops, and readiness checks</li>
+              <li>Inclusive teams where every role matters</li>
             </ul>
           </div>
           <div className="card glass">
-            <h3>Build</h3>
+            <h3>Who We Are</h3>
             <ul>
-              <li><a href="https://openmct.nasa.gov/" target="_blank" rel="noreferrer">Open MCT</a></li>
-              <li><a href="https://www.nasa.gov/stem" target="_blank" rel="noreferrer">STEM Resources</a></li>
-              <li><a href="https://solarsystem.nasa.gov/basics/" target="_blank" rel="noreferrer">Solar System Basics</a></li>
+              <li>Astrophysics and aerospace background across the staff</li>
+              <li>Robotics and fabrication mentors for rapid prototyping</li>
+              <li>Software coaches for telemetry, data viz, and automation</li>
+              <li>Designers who focus on storytelling and crew comms</li>
             </ul>
           </div>
         </div>
