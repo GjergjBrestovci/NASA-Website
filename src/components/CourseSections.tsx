@@ -74,9 +74,6 @@ const CourseSections: React.FC = () => {
             { title: 'Model Rocket Campaign', desc: 'Design, simulate, and fly small launchers with data capture.' },
             { title: 'Rover Nav Lab', desc: 'Obstacle avoidance, sensor fusion, and surface ops drills.' },
             { title: 'Mission Control Sim', desc: 'Roles, comm loops, and anomaly response practice.' },
-            { title: 'Astro Research', desc: 'Spectra, exoplanets, and orbital mechanics mini-projects.' },
-            { title: 'Data & Coding', desc: 'Python notebooks for telemetry parsing and visualization.' },
-            { title: 'Habitat Concepts', desc: 'Closed-loop life support sketches and rapid prototyping.' },
           ].map(item => (
             <SpotlightCard key={item.title} className="card glass" spotlightColor="rgba(123, 92, 255, 0.18)">
               <h3>{item.title}</h3>
