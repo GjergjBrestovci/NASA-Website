@@ -1,0 +1,119 @@
+.teacher-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.teacher-form label {
+  display: grid;
+  gap: 0.35rem;
+  color: #f5f2ff;
+}
+
+.teacher-form input,
+.teacher-table input,
+.teacher-table select {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f5f2ff;
+}
+
+.teacher-form input:focus,
+.teacher-table input:focus,
+.teacher-table select:focus {
+  outline: 2px solid rgba(125, 249, 255, 0.35);
+}
+
+.teacher-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.teacher-panel__bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.teacher-actions {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.teacher-meta {
+  margin: 0;
+  color: #c1b3ff;
+  font-size: 0.95rem;
+}
+
+.teacher-table {
+  display: grid;
+  gap: 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.75rem;
+  background: rgba(6, 9, 20, 0.7);
+}
+
+.teacher-table__head,
+.teacher-table__row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1.4fr 0.8fr 0.6fr;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.teacher-table__head {
+  color: #c1b3ff;
+  font-size: 0.95rem;
+}
+
+.teacher-table__row {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.teacher-table select,
+.teacher-table button {
+  height: 100%;
+}
+
+.teacher-table button {
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f5f2ff;
+  cursor: pointer;
+}
+
+.teacher-table button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.teacher-empty {
+  margin: 0.25rem 0 0;
+  color: #f8fbff;
+}
+
+.form-error {
+  margin: 0;
+  color: #ffb4b4;
+}
+
+.form-success {
+  margin: 0.2rem 0 0;
+  color: #7df9ff;
+}

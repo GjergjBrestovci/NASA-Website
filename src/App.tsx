@@ -5,6 +5,7 @@ import logo from './assets/logo.svg';
 import CentralHero from './components/CentralHero';
 import AboutSection from './components/AboutSection';
 import CourseSections from './components/CourseSections';
+import TeachersPortal from './components/TeachersPortal';
 import usePrefersReducedMotion from './hooks/usePrefersReducedMotion';
 import './App.css';
 
@@ -35,6 +36,7 @@ const App: React.FC = () => {
           { label: 'About', href: '#about' },
           { label: 'Projects', href: '#projects' },
           { label: 'Schedule', href: '#schedule' },
+          { label: 'Teachers', href: '#teachers' },
           { label: 'Join', href: '#join' },
         ]}
         activeHref="/"
@@ -65,6 +67,7 @@ const App: React.FC = () => {
         <CentralHero />
         <AboutSection disableAnimations={prefersReducedMotion} />
         <CourseSections />
+        <TeachersPortal />
       </div>
     </div>
   );

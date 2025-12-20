@@ -5,9 +5,9 @@ A modern, animated website built with React, TypeScript, and Vite featuring smoo
 ## Features
 
 - 🚀 **Hero Section**: Eye-catching landing with fade-in animations
-- 📖 **Team Story Section**: Placeholder for team narrative with visual appeal
-- 💡 **Product Section**: Split layout showing Theory (How it Works) and Practice (Implementation)
-- 🔗 **Footer**: Minimalist design with social links
+- 📖 **Projects & Missions**: NASA-inspired course overview with spotlight cards
+- 🗓️ **Dynamic Schedule**: Reads from Supabase via the API server
+- 🔐 **Teachers Console**: Auth-only page to edit the shared schedule
 - 🎨 **Modern Design**: Monotone background with accent colors
 - ✨ **Smooth Animations**: Fade-in on scroll, hover effects, and transitions
 - 📱 **Fully Responsive**: Works seamlessly on desktop, tablet, and mobile
@@ -41,6 +41,12 @@ npm run dev
 
 3. Open your browser and visit the URL shown in the terminal (typically `http://localhost:5173`)
 
+To run the API server locally (required for teacher schedule edits):
+```bash
+npm run server
+```
+The Vite dev server proxies `/api` requests to the API server on port 8787.
+
 ### Build for Production
 
 ```bash
@@ -53,6 +59,44 @@ The built files will be in the `dist` directory.
 
 ```bash
 npm run preview
+```
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and fill in your Supabase credentials:
+
+- `SUPABASE_URL` – project URL
+- `SUPABASE_SERVICE_ROLE_KEY` – service role key (server only)
+- `VITE_SUPABASE_URL` – same as `SUPABASE_URL` for the frontend
+- `VITE_SUPABASE_ANON_KEY` – anon public key for frontend auth
+- `PORT` – API server port (default `8787`)
+
+## Supabase Schema
+
+Run this SQL in Supabase to create the schedule table and restrict writes to teachers (set `app_metadata.role = 'teacher'` on teacher accounts):
+
+```sql
+create table if not exists public.schedule (
+	id uuid primary key default gen_random_uuid(),
+	title text not null,
+	slot text not null,
+	focus text not null,
+	status text not null default 'upcoming',
+	position int not null default 0,
+	inserted_at timestamptz not null default now()
+);
+
+alter table public.schedule enable row level security;
+
+-- Anyone can read schedule
+create policy "schedule_read_all" on public.schedule
+	for select using (true);
+
+-- Only authenticated users with teacher role can modify
+create policy "schedule_write_teacher" on public.schedule
+	for all
+	using (auth.role() = 'authenticated' and coalesce(raw_app_meta_data->>'role', '') = 'teacher')
+	with check (auth.role() = 'authenticated' and coalesce(raw_app_meta_data->>'role', '') = 'teacher');
 ```
 
 ## Project Structure
@@ -70,6 +114,7 @@ src/
 │   └── Footer.css
 ├── App.tsx               # Main app component
 ├── App.css               # App-level styles
+├── supabaseClient.ts     # Frontend Supabase client (anon key)
 ├── main.tsx              # Entry point
 └── index.css             # Global styles
 ```

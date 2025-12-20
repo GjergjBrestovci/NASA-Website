@@ -1,35 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './CourseSections.css';
 import ChromaGrid from './ChromaGrid';
 import SpotlightCard from './SpotlightCard';
 
+type ScheduleItem = {
+  id?: string;
+  title: string;
+  slot: string;
+  focus: string;
+  status: string;
+};
+
+const fallbackSchedule: ScheduleItem[] = [
+  {
+    title: 'Launch Briefing',
+    slot: 'Mondays · 16:00 – 17:00',
+    focus: 'Mission overview, crew roles, and weekly objectives.',
+    status: 'live',
+  },
+  {
+    title: 'Build & Test Lab',
+    slot: 'Wednesdays · 16:00 – 18:00',
+    focus: 'Hands-on builds, sensor wiring, and code checkpoints.',
+    status: 'upcoming',
+  },
+  {
+    title: 'Flight Readiness Sim',
+    slot: 'Fridays · 15:30 – 17:00',
+    focus: 'Comms loops, anomalies, and go/no-go drills.',
+    status: 'upcoming',
+  },
+  {
+    title: 'Launch Day',
+    slot: 'Monthly · Weather permitting',
+    focus: 'Integration, final checks, and launch operations.',
+    status: 'milestone',
+  },
+];
+
 const CourseSections: React.FC = () => {
-  const schedule = [
-    {
-      title: 'Launch Briefing',
-      slot: 'Mondays · 16:00 – 17:00',
-      focus: 'Mission overview, crew roles, and weekly objectives.',
-      status: 'live',
-    },
-    {
-      title: 'Build & Test Lab',
-      slot: 'Wednesdays · 16:00 – 18:00',
-      focus: 'Hands-on builds, sensor wiring, and code checkpoints.',
-      status: 'upcoming',
-    },
-    {
-      title: 'Flight Readiness Sim',
-      slot: 'Fridays · 15:30 – 17:00',
-      focus: 'Comms loops, anomalies, and go/no-go drills.',
-      status: 'upcoming',
-    },
-    {
-      title: 'Launch Day',
-      slot: 'Monthly · Weather permitting',
-      focus: 'Integration, final checks, and launch operations.',
-      status: 'milestone',
-    },
-  ];
+  const [schedule, setSchedule] = useState<ScheduleItem[]>(fallbackSchedule);
+  const [loadingSchedule, setLoadingSchedule] = useState(false);
+
+  useEffect(() => {
+    const loadSchedule = async () => {
+      setLoadingSchedule(true);
+      try {
+        const res = await fetch('/api/schedule');
+        if (!res.ok) {
+          throw new Error('Failed to load schedule');
+        }
+        const payload = await res.json();
+        if (Array.isArray(payload.items) && payload.items.length) {
+          setSchedule(payload.items);
+        }
+      } catch (_err) {
+        setSchedule(fallbackSchedule);
+      } finally {
+        setLoadingSchedule(false);
+      }
+    };
+
+    loadSchedule();
+  }, []);
 
   return (
     <div className="course-shell">
@@ -129,6 +162,7 @@ const CourseSections: React.FC = () => {
           <p className="eyebrow">Schedule</p>
           <h2 className="section__title">Sessions & Events</h2>
           <p className="section__subtitle">Weekly meetups, build nights, and milestone launches.</p>
+          {loadingSchedule && <p className="section__note">Loading latest schedule...</p>}
         </div>
         <div className="schedule">
           <div className="schedule__rail" aria-hidden="true" />
