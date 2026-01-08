@@ -92,6 +92,21 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Dev bypass button
+const devBypassBtn = document.getElementById('devBypassBtn');
+if (devBypassBtn) {
+  devBypassBtn.addEventListener('click', () => {
+    // Set a dev token for bypassing auth
+    localStorage.setItem('teacher_token', 'dev-bypass-token');
+    localStorage.setItem('teacher_email', 'dev@localhost');
+    showStatus('Dev mode activated. Redirecting...', 'success');
+    
+    setTimeout(() => {
+      window.location.href = '/dashboard.html';
+    }, 800);
+  });
+}
+
 // Animate inputs on focus
 const inputs = document.querySelectorAll('.form-input');
 inputs.forEach(input => {
