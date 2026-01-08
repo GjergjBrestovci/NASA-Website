@@ -115,6 +115,43 @@ app.put('/api/schedule', requireTeacher, async (req, res) => {
   return res.json({ items: data });
 });
 
+// Teacher login endpoint
+app.post('/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
+  }
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Check if user has teacher role
+    const isTeacher = data.user?.app_metadata?.role === 'teacher';
+    if (!isTeacher) {
+      return res.status(403).json({ error: 'Access denied. Teacher credentials required.' });
+    }
+
+    return res.json({
+      token: data.session.access_token,
+      user: {
+        id: data.user.id,
+        email: data.user.email,
+        role: 'teacher',
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({ error: 'Authentication service unavailable' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`API server listening on http://localhost:${port}`);
 });

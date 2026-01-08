@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission Control Login | NASA Freifach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="login-container">
+    <!-- Starfield background -->
+    <div class="starfield" id="starfield"></div>
+    
+    <!-- Nebula overlays -->
+    <div class="nebula nebula--1"></div>
+    <div class="nebula nebula--2"></div>
+    
+    <!-- Grid overlay -->
+    <div class="hud-grid"></div>
+
+    <!-- Login card -->
+    <main class="login-card">
+      <div class="login-card__header">
+        <div class="login-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            <path d="M2 12h20"/>
+          </svg>
+        </div>
+        <h1 class="login-card__title">Mission Control</h1>
+        <p class="login-card__subtitle">Teacher Access Portal</p>
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="email">
+            <span class="form-label__icon">◈</span>
+            Commander ID (Email)
+          </label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            placeholder="commander@spengergasse.at"
+            autocomplete="email"
+            required
+          >
+          <div class="form-input__glow"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">
+            <span class="form-label__icon">◈</span>
+            Access Code
+          </label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            class="form-input" 
+            placeholder="••••••••••••"
+            autocomplete="current-password"
+            required
+          >
+          <div class="form-input__glow"></div>
+        </div>
+
+        <div class="form-status" id="formStatus"></div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="login-btn__text">Initialize Access</span>
+          <span class="login-btn__icon">→</span>
+          <div class="login-btn__loader"></div>
+        </button>
+      </form>
+
+      <div class="login-card__footer">
+        <p class="security-notice">
+          <span class="security-notice__icon">🔒</span>
+          Secure connection established
+        </p>
+        <a href="#" class="forgot-link">Forgot access credentials?</a>
+      </div>
+
+      <!-- HUD corners -->
+      <div class="hud-corner hud-corner--tl"></div>
+      <div class="hud-corner hud-corner--tr"></div>
+      <div class="hud-corner hud-corner--bl"></div>
+      <div class="hud-corner hud-corner--br"></div>
+    </main>
+
+    <!-- Status bar -->
+    <footer class="status-bar">
+      <div class="status-bar__item">
+        <span class="status-bar__dot status-bar__dot--active"></span>
+        System Online
+      </div>
+      <div class="status-bar__item">
+        <span class="status-bar__label">PORT:</span> 3001
+      </div>
+      <div class="status-bar__item">
+        <span class="status-bar__label">STATUS:</span> Awaiting Authentication
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
