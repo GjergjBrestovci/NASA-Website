@@ -1,0 +1,29 @@
+This is the official main page for the HTL Spengergasse NASA MoonShot-Training Freifach.
+The website is split into two different components
+    -The main page
+        Design with a modern and responsive UI for people who want to learn about the Freifach
+        Made to be informative, it hosts pictures of the labs and the instructors. 
+    -The teacher page
+        a secret site that only teacher can access, it uses a database for authentication
+        This special page is made for the teacher so that they can change the schedule in the home page
+        authentication allows only specific credentials to login (the teachers)
+
+TECH STACK
+
+    -Frontend:
+        -React 18.2.0 / Typescript
+        -Tailwind CSS
+    -Backend:
+        -Express JS
+        -Node JS
+        -Supabase DB
+ 
+STYLING
+
+    -Uses fast responsive open source components from reactbits.dev.
+    -Background is the floating lines background from reactbits.dev.
+    -Pill Nav offers a mix of modern and old school styling.
+    -Auto scrolling animation.
+    -Space themed color palett.
+    -Interactive animations.
+    

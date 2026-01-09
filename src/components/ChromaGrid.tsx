@@ -39,22 +39,7 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
   const pos = useRef({ x: 0, y: 0 });
 
   const demo: ChromaItem[] = [
-    {
-      image: 'https://i.pravatar.cc/300?img=8',
-      title: 'Alex Rivera',
-      subtitle: 'Astrophysics & Mission Design',
-      handle: '@alexrivera',
-      borderColor: '#4F46E5',
-      gradient: 'linear-gradient(145deg,#4F46E5,#05030d)',
-    },
-    {
-      image: 'https://i.pravatar.cc/300?img=11',
-      title: 'Jordan Chen',
-      subtitle: 'Robotics & Fabrication',
-      handle: '@jordanchen',
-      borderColor: '#10B981',
-      gradient: 'linear-gradient(210deg,#10B981,#05030d)',
-    },
+    
     {
       image: 'https://i.pravatar.cc/300?img=3',
       title: 'Morgan Blake',
