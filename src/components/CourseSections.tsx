@@ -220,9 +220,15 @@ const CourseSections: React.FC = () => {
           <p className="section__subtitle">Snapshots from labs, launch pads, and mission control sims.</p>
         </div>
         <div className="gallery">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="gallery__item" aria-label={`Gallery placeholder ${i + 1}`}>Cosmic Capture</div>
-          ))}
+          <div className="gallery__item">
+            <img src="/nasa-robot.jpg" alt="NASA Spider Robot with ESP32 microcontroller" />
+          </div>
+          <div className="gallery__item">
+            <img src="/nasa-meeting.jpg" alt="NASA team meeting" style={{ objectPosition: 'top' }} />
+          </div>
+          <div className="gallery__item">
+            <img src="/nasa-team.jpg" alt="NASA team" />
+          </div>
         </div>
       </section>
 
