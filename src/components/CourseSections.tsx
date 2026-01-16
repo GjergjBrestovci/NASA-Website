@@ -69,50 +69,24 @@ const CourseSections: React.FC = () => {
       <section className="section block" id="about-course">
         <div className="section__heading">
           <p className="eyebrow">About the Course</p>
-          <h2 className="section__title">NASA-inspired Freifach</h2>
+          <h2 className="section__title">Spengergasse NASA Freifach</h2>
           <p className="section__subtitle">
             Explore astronomy, rockets, robotics, physics, and mission planning through NASA-style labs. Students build models, run simulations, code data pipelines, and collaborate like a real flight team.
           </p>
         </div>
         <div className="section__grid two">
           <SpotlightCard className="card glass" spotlightColor="rgba(125, 249, 255, 0.2)">
-            <h3>What You Will Do</h3>
+            <h3>What you will do</h3>
             <ul>
-              <li>Hands-on experiments and microgravity demos</li>
-              <li>Mission simulations with roles and flight rules</li>
-              <li>Research sprints on astronomy and space systems</li>
-              <li>Team builds: rockets, rovers, and payload mockups</li>
+              <p>With great dedication and impressive creativity, our students are currently immersed in the demanding phases of our exciting NASA project. Working collaboratively across various complex sub-projects, they are developing detailed solutions that are not only technically innovative but could also offer tangible, practical applications for the future challenges of space travel. </p>
             </ul>
           </SpotlightCard>
           <SpotlightCard className="card glass" spotlightColor="rgba(125, 249, 255, 0.2)">
-            <h3>Why It Matters</h3>
+            <h3>Achievements</h3>
             <ul>
-              <li>Learn NASA systems thinking and crew teamwork</li>
-              <li>Blend physics, coding, and design for real outcomes</li>
-              <li>Practice communication, go/no-go readiness, and briefings</li>
-              <li>Connect STEM skills to real missions and careers</li>
+              <p>This year’s NASA Moonshot Course culminated in an impressive final day filled with inspiration, creativity, and team spirit. Together with other participants, we visited the Institute of Architectural Sciences at TU Wien, where several striking project presentations on the topic of 'Space Station Design' were showcased—all under the guidance of renowned space architect Dr. Sandra Häuplik-Meusburger.</p>
             </ul>
           </SpotlightCard>
-        </div>
-      </section>
-
-      <section className="section block" id="projects">
-        <div className="section__heading">
-          <p className="eyebrow">Projects & Missions</p>
-          <h2 className="section__title">Studio & Lab Highlights</h2>
-          <p className="section__subtitle">Model rockets, rover drills, telescope nights, coding tasks, and mission sims based on NASA challenges.</p>
-        </div>
-        <div className="section__grid three">
-          {[
-            { title: 'Model Rocket Campaign', desc: 'Design, simulate, and fly small launchers with data capture.' },
-            { title: 'Rover Nav Lab', desc: 'Obstacle avoidance, sensor fusion, and surface ops drills.' },
-            { title: 'Mission Control Sim', desc: 'Roles, comm loops, and anomaly response practice.' },
-          ].map(item => (
-            <SpotlightCard key={item.title} className="card glass" spotlightColor="rgba(123, 92, 255, 0.18)">
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
-            </SpotlightCard>
-          ))}
         </div>
       </section>
 

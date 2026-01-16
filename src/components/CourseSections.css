@@ -61,6 +61,31 @@
 
 .section__grid.two {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+}
+
+.section__grid.two .spotlight-card.card.glass {
+  align-self: start;
+  justify-self: start;
+  width: fit-content;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: auto;
+  display: grid;
+}
+
+.section__grid.two .spotlight-card.card.glass .spotlight-card__content {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.section__grid.two .card h3 {
+  text-align: center;
+}
+
+.section__grid.two .card p {
+  margin-top: 0.4rem;
 }
 
 .section__grid.three {
