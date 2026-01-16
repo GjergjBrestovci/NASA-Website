@@ -240,7 +240,7 @@ const PillNav: React.FC<PillNavProps> = ({
     ['--pill-text' as string]: resolvedPillTextColor,
   } as React.CSSProperties;
 
-  const handleItemClick = (item: PillNavItem, e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleItemClick = (item: PillNavItem, e: React.MouseEvent<HTMLElement>) => {
     if (item.href?.startsWith('#')) {
       e.preventDefault();
       const target = document.querySelector(item.href);
@@ -260,18 +260,30 @@ const PillNav: React.FC<PillNavProps> = ({
         aria-label="Primary"
         style={cssVars}
       >
-        <a
-          href={items?.[0]?.href || '#'}
-          aria-label="Home"
-          onMouseEnter={handleLogoEnter}
-          role="menuitem"
-          ref={el => {
-            logoRef.current = el;
-          }}
-          className="pill-nav-logo"
-        >
-          
-        </a>
+        {items?.[0]?.href?.startsWith('#') ? (
+          <button
+            type="button"
+            aria-label="Home"
+            onMouseEnter={handleLogoEnter}
+            role="menuitem"
+            ref={el => {
+              logoRef.current = el;
+            }}
+            className="pill-nav-logo"
+            onClick={e => handleItemClick(items[0], e)}
+          />
+        ) : (
+          <a
+            href={items?.[0]?.href || '#'}
+            aria-label="Home"
+            onMouseEnter={handleLogoEnter}
+            role="menuitem"
+            ref={el => {
+              logoRef.current = el;
+            }}
+            className="pill-nav-logo"
+          />
+        )}
 
         <div ref={navItemsRef} className="pill-nav-items">
           <ul role="menubar" className="pill-nav-list">
@@ -285,31 +297,59 @@ const PillNav: React.FC<PillNavProps> = ({
 
               return (
                 <li key={item.href} role="none" className="pill-nav-li">
-                  <a
-                    role="menuitem"
-                    href={item.href}
-                    className={`pill-nav-pill ${isActive ? 'is-active' : ''}`}
-                    style={pillStyle}
-                    aria-label={item.ariaLabel || item.label}
-                    onMouseEnter={() => handleEnter(i)}
-                    onMouseLeave={() => handleLeave(i)}
-                    onClick={e => handleItemClick(item, e)}
-                  >
-                    <span
-                      className="hover-circle"
-                      aria-hidden="true"
-                      ref={el => {
-                        circleRefs.current[i] = el;
-                      }}
-                    />
-                    <span className="label-stack">
-                      <span className="pill-label">{item.label}</span>
-                      <span className="pill-label-hover" aria-hidden="true">
-                        {item.label}
+                  {item.href.startsWith('#') ? (
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className={`pill-nav-pill ${isActive ? 'is-active' : ''}`}
+                      style={pillStyle}
+                      aria-label={item.ariaLabel || item.label}
+                      onMouseEnter={() => handleEnter(i)}
+                      onMouseLeave={() => handleLeave(i)}
+                      onClick={e => handleItemClick(item, e)}
+                    >
+                      <span
+                        className="hover-circle"
+                        aria-hidden="true"
+                        ref={el => {
+                          circleRefs.current[i] = el;
+                        }}
+                      />
+                      <span className="label-stack">
+                        <span className="pill-label">{item.label}</span>
+                        <span className="pill-label-hover" aria-hidden="true">
+                          {item.label}
+                        </span>
                       </span>
-                    </span>
-                    {isActive && <span className="pill-active-dot" aria-hidden="true" />}
-                  </a>
+                      {isActive && <span className="pill-active-dot" aria-hidden="true" />}
+                    </button>
+                  ) : (
+                    <a
+                      role="menuitem"
+                      href={item.href}
+                      className={`pill-nav-pill ${isActive ? 'is-active' : ''}`}
+                      style={pillStyle}
+                      aria-label={item.ariaLabel || item.label}
+                      onMouseEnter={() => handleEnter(i)}
+                      onMouseLeave={() => handleLeave(i)}
+                      onClick={e => handleItemClick(item, e)}
+                    >
+                      <span
+                        className="hover-circle"
+                        aria-hidden="true"
+                        ref={el => {
+                          circleRefs.current[i] = el;
+                        }}
+                      />
+                      <span className="label-stack">
+                        <span className="pill-label">{item.label}</span>
+                        <span className="pill-label-hover" aria-hidden="true">
+                          {item.label}
+                        </span>
+                      </span>
+                      {isActive && <span className="pill-active-dot" aria-hidden="true" />}
+                    </a>
+                  )}
                 </li>
               );
             })}
@@ -338,13 +378,23 @@ const PillNav: React.FC<PillNavProps> = ({
             const isActive = activeHref === item.href;
             return (
               <li key={item.href}>
-                <a
-                  href={item.href}
-                  className={`pill-nav-mobile-link ${isActive ? 'is-active' : ''}`}
-                  onClick={e => handleItemClick(item, e)}
-                >
-                  {item.label}
-                </a>
+                {item.href.startsWith('#') ? (
+                  <button
+                    type="button"
+                    className={`pill-nav-mobile-link ${isActive ? 'is-active' : ''}`}
+                    onClick={e => handleItemClick(item, e)}
+                  >
+                    {item.label}
+                  </button>
+                ) : (
+                  <a
+                    href={item.href}
+                    className={`pill-nav-mobile-link ${isActive ? 'is-active' : ''}`}
+                    onClick={e => handleItemClick(item, e)}
+                  >
+                    {item.label}
+                  </a>
+                )}
               </li>
             );
           })}
