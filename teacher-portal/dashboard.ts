@@ -1,37 +1,41 @@
-// API Configuration
 const API_BASE = 'http://localhost:8787';
 
-// State
-let scheduleItems = [];
-let editingEventId = null;
-let deletingEventId = null;
+type ScheduleItem = {
+  id?: string;
+  title: string;
+  slot: string;
+  focus: string;
+  status: string;
+  position?: number;
+};
 
-// DOM Elements
-const scheduleList = document.getElementById('scheduleList');
-const loadingState = document.getElementById('loadingState');
-const emptyState = document.getElementById('emptyState');
-const userEmail = document.getElementById('userEmail');
-const toastContainer = document.getElementById('toastContainer');
+type ToastType = 'success' | 'error';
 
-// Modals
-const eventModal = document.getElementById('eventModal');
-const deleteModal = document.getElementById('deleteModal');
+let scheduleItems: ScheduleItem[] = [];
+let editingEventId: string | null = null;
+let deletingEventId: string | null = null;
 
-// Buttons
-const addEventBtn = document.getElementById('addEventBtn');
-const logoutBtn = document.getElementById('logoutBtn');
-const modalClose = document.getElementById('modalClose');
-const modalBackdrop = document.getElementById('modalBackdrop');
-const cancelBtn = document.getElementById('cancelBtn');
-const deleteBackdrop = document.getElementById('deleteBackdrop');
-const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+const scheduleList = document.getElementById('scheduleList') as HTMLElement | null;
+const loadingState = document.getElementById('loadingState') as HTMLElement | null;
+const emptyState = document.getElementById('emptyState') as HTMLElement | null;
+const userEmail = document.getElementById('userEmail') as HTMLElement | null;
+const toastContainer = document.getElementById('toastContainer') as HTMLElement | null;
 
-// Form
-const eventForm = document.getElementById('eventForm');
-const modalTitle = document.getElementById('modalTitle');
+const eventModal = document.getElementById('eventModal') as HTMLElement | null;
+const deleteModal = document.getElementById('deleteModal') as HTMLElement | null;
 
-// Auth token
+const addEventBtn = document.getElementById('addEventBtn') as HTMLButtonElement | null;
+const logoutBtn = document.getElementById('logoutBtn') as HTMLButtonElement | null;
+const modalClose = document.getElementById('modalClose') as HTMLButtonElement | null;
+const modalBackdrop = document.getElementById('modalBackdrop') as HTMLElement | null;
+const cancelBtn = document.getElementById('cancelBtn') as HTMLButtonElement | null;
+const deleteBackdrop = document.getElementById('deleteBackdrop') as HTMLElement | null;
+const cancelDeleteBtn = document.getElementById('cancelDeleteBtn') as HTMLButtonElement | null;
+const confirmDeleteBtn = document.getElementById('confirmDeleteBtn') as HTMLButtonElement | null;
+
+const eventForm = document.getElementById('eventForm') as HTMLFormElement | null;
+const modalTitle = document.getElementById('modalTitle') as HTMLElement | null;
+
 function getToken() {
   return localStorage.getItem('teacher_token');
 }
@@ -40,27 +44,26 @@ function getEmail() {
   return localStorage.getItem('teacher_email');
 }
 
-// Check authentication
 function checkAuth() {
   const token = getToken();
   if (!token) {
     window.location.href = '/';
     return false;
   }
-  
+
   const email = getEmail();
-  if (email) {
+  if (email && userEmail) {
     userEmail.textContent = email;
   }
   return true;
 }
 
-// Initialize starfield
 function createStarfield() {
   const starfield = document.getElementById('starfield');
+  if (!starfield) return;
   const starCount = 60;
 
-  for (let i = 0; i < starCount; i++) {
+  for (let i = 0; i < starCount; i += 1) {
     const star = document.createElement('div');
     star.className = 'star';
     star.style.left = `${Math.random() * 100}%`;
@@ -72,8 +75,8 @@ function createStarfield() {
   }
 }
 
-// Toast notifications
-function showToast(message, type = 'success') {
+function showToast(message: string, type: ToastType = 'success') {
+  if (!toastContainer) return;
   const toast = document.createElement('div');
   toast.className = `toast toast--${type}`;
   toast.innerHTML = `
@@ -88,12 +91,11 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
-// API calls
 async function fetchSchedule() {
   try {
     const response = await fetch(`${API_BASE}/api/schedule`);
     if (!response.ok) throw new Error('Failed to fetch schedule');
-    const data = await response.json();
+    const data: { items?: ScheduleItem[] } = await response.json();
     return data.items || [];
   } catch (error) {
     console.error('Fetch error:', error);
@@ -102,35 +104,37 @@ async function fetchSchedule() {
   }
 }
 
-async function saveSchedule(items) {
+async function saveSchedule(items: ScheduleItem[]) {
   const token = getToken();
   try {
     const response = await fetch(`${API_BASE}/api/schedule`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ items }),
     });
 
     if (!response.ok) {
-      const data = await response.json();
+      const data: { error?: string } = await response.json();
       throw new Error(data.error || 'Failed to save schedule');
     }
 
-    const data = await response.json();
+    const data: { items?: ScheduleItem[] } = await response.json();
     return data.items || items;
   } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to save schedule';
     console.error('Save error:', error);
-    showToast(error.message, 'error');
+    showToast(message, 'error');
     return null;
   }
 }
 
-// Render schedule list
 function renderSchedule() {
-  loadingState.style.display = 'none';
+  if (loadingState) loadingState.style.display = 'none';
+
+  if (!scheduleList || !emptyState) return;
 
   if (scheduleItems.length === 0) {
     emptyState.style.display = 'flex';
@@ -139,8 +143,10 @@ function renderSchedule() {
   }
 
   emptyState.style.display = 'none';
-  
-  scheduleList.innerHTML = scheduleItems.map((item, index) => `
+
+  scheduleList.innerHTML = scheduleItems
+    .map(
+      (item, index) => `
     <div class="schedule-item" data-id="${item.id}" data-index="${index}">
       <div class="schedule-item__handle" title="Drag to reorder">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -173,91 +179,94 @@ function renderSchedule() {
         </button>
       </div>
     </div>
-  `).join('');
+  `
+    )
+    .join('');
 
-  // Attach event listeners
-  document.querySelectorAll('.edit-btn').forEach(btn => {
-    btn.addEventListener('click', () => openEditModal(btn.dataset.id));
+  document.querySelectorAll<HTMLButtonElement>('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => openEditModal(btn.dataset.id || null));
   });
 
-  document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', () => openDeleteModal(btn.dataset.id));
+  document.querySelectorAll<HTMLButtonElement>('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', () => openDeleteModal(btn.dataset.id || null));
   });
 }
 
-// Helper function to escape HTML
-function escapeHtml(text) {
+function escapeHtml(text: string) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 }
 
-// Modal functions
 function openAddModal() {
   editingEventId = null;
-  modalTitle.textContent = 'Add New Event';
-  eventForm.reset();
+  if (modalTitle) modalTitle.textContent = 'Add New Event';
+  eventForm?.reset();
   setStatusValue('upcoming');
-  eventModal.classList.add('active');
+  eventModal?.classList.add('active');
 }
 
-function openEditModal(id) {
+function openEditModal(id: string | null) {
   const item = scheduleItems.find(i => i.id === id);
   if (!item) return;
 
   editingEventId = id;
-  modalTitle.textContent = 'Edit Event';
-  
-  document.getElementById('eventId').value = item.id;
-  document.getElementById('eventTitle').value = item.title;
-  document.getElementById('eventSlot').value = item.slot;
-  document.getElementById('eventFocus').value = item.focus;
+  if (modalTitle) modalTitle.textContent = 'Edit Event';
+
+  const eventId = document.getElementById('eventId') as HTMLInputElement | null;
+  const eventTitle = document.getElementById('eventTitle') as HTMLInputElement | null;
+  const eventSlot = document.getElementById('eventSlot') as HTMLInputElement | null;
+  const eventFocus = document.getElementById('eventFocus') as HTMLTextAreaElement | null;
+
+  if (eventId) eventId.value = item.id ?? '';
+  if (eventTitle) eventTitle.value = item.title;
+  if (eventSlot) eventSlot.value = item.slot;
+  if (eventFocus) eventFocus.value = item.focus;
   setStatusValue(item.status);
-  
-  eventModal.classList.add('active');
+
+  eventModal?.classList.add('active');
 }
 
 function closeEventModal() {
-  eventModal.classList.remove('active');
+  eventModal?.classList.remove('active');
   editingEventId = null;
-  eventForm.reset();
+  eventForm?.reset();
   setStatusValue('upcoming');
 }
 
-function openDeleteModal(id) {
+function openDeleteModal(id: string | null) {
   const item = scheduleItems.find(i => i.id === id);
   if (!item) return;
 
   deletingEventId = id;
-  document.getElementById('deleteEventTitle').textContent = item.title;
-  deleteModal.classList.add('active');
+  const deleteEventTitle = document.getElementById('deleteEventTitle') as HTMLElement | null;
+  if (deleteEventTitle) deleteEventTitle.textContent = item.title;
+  deleteModal?.classList.add('active');
 }
 
 function closeDeleteModal() {
-  deleteModal.classList.remove('active');
+  deleteModal?.classList.remove('active');
   deletingEventId = null;
 }
 
-// Form submission
-async function handleFormSubmit(e) {
+async function handleFormSubmit(e: Event) {
   e.preventDefault();
+  if (!eventForm) return;
 
   const formData = new FormData(eventForm);
-  const eventData = {
-    title: formData.get('title').trim(),
-    slot: formData.get('slot').trim(),
-    focus: formData.get('focus').trim(),
-    status: formData.get('status'),
+  const eventData: ScheduleItem = {
+    title: String(formData.get('title') ?? '').trim(),
+    slot: String(formData.get('slot') ?? '').trim(),
+    focus: String(formData.get('focus') ?? '').trim(),
+    status: String(formData.get('status') ?? 'upcoming'),
   };
 
   if (editingEventId) {
-    // Update existing item
     const index = scheduleItems.findIndex(i => i.id === editingEventId);
     if (index !== -1) {
       scheduleItems[index] = { ...scheduleItems[index], ...eventData };
     }
   } else {
-    // Add new item
     eventData.position = scheduleItems.length;
     scheduleItems.push(eventData);
   }
@@ -271,13 +280,11 @@ async function handleFormSubmit(e) {
   }
 }
 
-// Delete event
 async function handleDelete() {
   if (!deletingEventId) return;
 
   scheduleItems = scheduleItems.filter(i => i.id !== deletingEventId);
-  
-  // Update positions
+
   scheduleItems.forEach((item, index) => {
     item.position = index;
   });
@@ -291,35 +298,34 @@ async function handleDelete() {
   }
 }
 
-// Logout
 function handleLogout() {
   localStorage.removeItem('teacher_token');
   localStorage.removeItem('teacher_email');
   window.location.href = '/';
 }
 
-// Status selector
 function initStatusSelector() {
   const statusSelector = document.getElementById('statusSelector');
-  const statusInput = document.getElementById('eventStatus');
-  const statusOptions = statusSelector.querySelectorAll('.status-option');
+  const statusInput = document.getElementById('eventStatus') as HTMLInputElement | null;
+  if (!statusSelector || !statusInput) return;
+
+  const statusOptions = statusSelector.querySelectorAll<HTMLButtonElement>('.status-option');
 
   statusOptions.forEach(option => {
     option.addEventListener('click', () => {
-      // Remove active from all
       statusOptions.forEach(opt => opt.classList.remove('active'));
-      // Add active to clicked
       option.classList.add('active');
-      // Update hidden input
-      statusInput.value = option.dataset.value;
+      statusInput.value = option.dataset.value ?? 'upcoming';
     });
   });
 }
 
-function setStatusValue(status) {
+function setStatusValue(status: string) {
   const statusSelector = document.getElementById('statusSelector');
-  const statusInput = document.getElementById('eventStatus');
-  const statusOptions = statusSelector.querySelectorAll('.status-option');
+  const statusInput = document.getElementById('eventStatus') as HTMLInputElement | null;
+  if (!statusSelector || !statusInput) return;
+
+  const statusOptions = statusSelector.querySelectorAll<HTMLButtonElement>('.status-option');
 
   statusOptions.forEach(opt => {
     opt.classList.remove('active');
@@ -330,33 +336,29 @@ function setStatusValue(status) {
   statusInput.value = status;
 }
 
-// Initialize
 async function init() {
   if (!checkAuth()) return;
 
   createStarfield();
   initStatusSelector();
 
-  // Load schedule
   scheduleItems = await fetchSchedule();
   renderSchedule();
 
-  // Event listeners
-  addEventBtn.addEventListener('click', openAddModal);
-  logoutBtn.addEventListener('click', handleLogout);
-  
-  modalClose.addEventListener('click', closeEventModal);
-  modalBackdrop.addEventListener('click', closeEventModal);
-  cancelBtn.addEventListener('click', closeEventModal);
-  
-  deleteBackdrop.addEventListener('click', closeDeleteModal);
-  cancelDeleteBtn.addEventListener('click', closeDeleteModal);
-  confirmDeleteBtn.addEventListener('click', handleDelete);
-  
-  eventForm.addEventListener('submit', handleFormSubmit);
+  addEventBtn?.addEventListener('click', openAddModal);
+  logoutBtn?.addEventListener('click', handleLogout);
 
-  // Keyboard shortcuts
-  document.addEventListener('keydown', (e) => {
+  modalClose?.addEventListener('click', closeEventModal);
+  modalBackdrop?.addEventListener('click', closeEventModal);
+  cancelBtn?.addEventListener('click', closeEventModal);
+
+  deleteBackdrop?.addEventListener('click', closeDeleteModal);
+  cancelDeleteBtn?.addEventListener('click', closeDeleteModal);
+  confirmDeleteBtn?.addEventListener('click', handleDelete);
+
+  eventForm?.addEventListener('submit', handleFormSubmit);
+
+  document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeEventModal();
       closeDeleteModal();
@@ -364,5 +366,4 @@ async function init() {
   });
 }
 
-// Start app
 init();

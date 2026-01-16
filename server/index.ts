@@ -1,7 +1,24 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { type NextFunction, type Request, type Response } from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
+
+type ScheduleItem = {
+  id?: string;
+  title: string;
+  slot: string;
+  focus: string;
+  status: string;
+  position?: number;
+};
+
+type AuthenticatedRequest = Request & {
+  teacher?: {
+    id: string;
+    email?: string;
+    role?: string;
+  };
+};
 
 const app = express();
 const port = process.env.PORT || 8787;
@@ -20,11 +37,11 @@ const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
-app.get('/health', (_req, res) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: Date.now() });
 });
 
-app.get('/api/schedule', async (_req, res) => {
+app.get('/api/schedule', async (_req: Request, res: Response) => {
   const { data, error } = await supabase
     .from('schedule')
     .select('*')
@@ -37,10 +54,9 @@ app.get('/api/schedule', async (_req, res) => {
   return res.json({ items: data ?? [] });
 });
 
-// Get single schedule item
-app.get('/api/schedule/:id', async (req, res) => {
+app.get('/api/schedule/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
-  
+
   const { data, error } = await supabase
     .from('schedule')
     .select('*')
@@ -54,15 +70,13 @@ app.get('/api/schedule/:id', async (req, res) => {
   return res.json({ item: data });
 });
 
-// Create single schedule item
-app.post('/api/schedule', requireTeacher, async (req, res) => {
-  const { title, slot, focus, status = 'upcoming' } = req.body;
+app.post('/api/schedule', requireTeacher, async (req: AuthenticatedRequest, res: Response) => {
+  const { title, slot, focus, status = 'upcoming' } = req.body ?? {};
 
   if (!title || !slot || !focus) {
     return res.status(400).json({ error: 'title, slot, and focus are required' });
   }
 
-  // Get max position
   const { data: maxData } = await supabase
     .from('schedule')
     .select('position')
@@ -84,8 +98,7 @@ app.post('/api/schedule', requireTeacher, async (req, res) => {
   return res.status(201).json({ item: data });
 });
 
-// Delete single schedule item
-app.delete('/api/schedule/:id', requireTeacher, async (req, res) => {
+app.delete('/api/schedule/:id', requireTeacher, async (req: AuthenticatedRequest, res: Response) => {
   const { id } = req.params;
 
   const { error } = await supabase
@@ -100,7 +113,7 @@ app.delete('/api/schedule/:id', requireTeacher, async (req, res) => {
   return res.json({ success: true });
 });
 
-async function requireTeacher(req, res, next) {
+async function requireTeacher(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
   const token = authHeader?.startsWith('Bearer ')
     ? authHeader.slice('Bearer '.length)
@@ -110,7 +123,6 @@ async function requireTeacher(req, res, next) {
     return res.status(401).json({ error: 'Missing bearer token' });
   }
 
-  // DEV MODE: Allow bypass token during development
   if (token === 'dev-bypass-token') {
     req.teacher = { id: 'dev', email: 'dev@localhost', role: 'teacher' };
     console.log('⚠️  DEV MODE: Authentication bypassed');
@@ -128,12 +140,12 @@ async function requireTeacher(req, res, next) {
     return res.status(403).json({ error: 'Not authorized' });
   }
 
-  req.teacher = data.user;
+  req.teacher = data.user as { id: string; email?: string; role?: string };
   return next();
 }
 
-app.put('/api/schedule', requireTeacher, async (req, res) => {
-  const items = Array.isArray(req.body?.items) ? req.body.items : null;
+app.put('/api/schedule', requireTeacher, async (req: AuthenticatedRequest, res: Response) => {
+  const items = Array.isArray(req.body?.items) ? (req.body.items as ScheduleItem[]) : null;
   if (!items) {
     return res.status(400).json({ error: 'Expected items array' });
   }
@@ -160,7 +172,7 @@ app.put('/api/schedule', requireTeacher, async (req, res) => {
     return res.status(500).json({ error: existingError.message });
   }
 
-  const incomingIds = normalized.filter(r => r.id).map(r => r.id);
+  const incomingIds = normalized.filter(r => r.id).map(r => r.id as string);
   const idsToDelete = (existing ?? [])
     .filter(row => !incomingIds.includes(row.id))
     .map(row => row.id);
@@ -185,9 +197,8 @@ app.put('/api/schedule', requireTeacher, async (req, res) => {
   return res.json({ items: data });
 });
 
-// Teacher login endpoint
-app.post('/auth/login', async (req, res) => {
-  const { email, password } = req.body;
+app.post('/auth/login', async (req: Request, res: Response) => {
+  const { email, password } = req.body ?? {};
 
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password are required' });
@@ -199,29 +210,17 @@ app.post('/auth/login', async (req, res) => {
       password,
     });
 
-    if (error) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    if (error || !data?.session?.access_token) {
+      return res.status(401).json({ error: error?.message || 'Authentication failed' });
     }
 
-    // Check if user has teacher role
-    const isTeacher = data.user?.app_metadata?.role === 'teacher';
-    if (!isTeacher) {
-      return res.status(403).json({ error: 'Access denied. Teacher credentials required.' });
-    }
-
-    return res.json({
-      token: data.session.access_token,
-      user: {
-        id: data.user.id,
-        email: data.user.email,
-        role: 'teacher',
-      },
-    });
+    return res.json({ token: data.session.access_token });
   } catch (err) {
-    return res.status(500).json({ error: 'Authentication service unavailable' });
+    console.error(err);
+    return res.status(500).json({ error: 'Unexpected authentication error' });
   }
 });
 
 app.listen(port, () => {
-  console.log(`API server listening on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
