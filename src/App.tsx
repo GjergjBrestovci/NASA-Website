@@ -33,7 +33,7 @@ const App: React.FC = () => {
         items={[
           { label: 'Home', href: '#top' },
           { label: 'About', href: '#about' },
-          { label: 'Projects', href: '#projects' },
+          { label: 'Team', href: '#team' },
           { label: 'Schedule', href: '#schedule' },
           { label: 'Join', href: '#join' },
         ]}

@@ -75,6 +75,22 @@
   display: grid;
 }
 
+.section__grid.two .card.glass {
+  align-self: start;
+  justify-self: start;
+  width: fit-content;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: auto;
+  display: grid;
+}
+
+.section__grid.two .card.glass ul {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .section__grid.two .spotlight-card.card.glass .spotlight-card__content {
   overflow-wrap: anywhere;
   word-break: break-word;

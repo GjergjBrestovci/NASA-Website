@@ -169,19 +169,13 @@ const CourseSections: React.FC = () => {
           <div className="card glass">
             <h3>What to Expect</h3>
             <ul>
-              <li>Mentors who coach like a mission control lead</li>
-              <li>Studios that mix hardware builds, data, and design</li>
-              <li>Clear rubrics, feedback loops, and readiness checks</li>
-              <li>Inclusive teams where every role matters</li>
+              <p>Guided by mentors who coach like mission control leads, students work in studios that fuse hardware builds, data, and design. We ensure progress through clear rubrics, active feedback loops, and readiness checks. This fosters inclusive teams where every role matters, ensuring that every individual contribution is vital to the mission's success.</p>
             </ul>
           </div>
           <div className="card glass">
             <h3>Who We Are</h3>
             <ul>
-              <li>Astrophysics and aerospace background across the staff</li>
-              <li>Robotics and fabrication mentors for rapid prototyping</li>
-              <li>Software coaches for telemetry, data viz, and automation</li>
-              <li>Designers who focus on storytelling and crew comms</li>
+              <p>At our core, we are passionate teachers with a genuine love for astronomy. As experienced programmers, we guide students through robotics and rapid prototyping. We support their software needs for telemetry and automation, while helping them design clear storytelling to ensure every mission concept is communicated effectively.</p>
             </ul>
           </div>
         </div>
