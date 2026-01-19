@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8787';
+const DASHBOARD_API_BASE = 'http://localhost:8787';
 
 type ScheduleItem = {
   id?: string;
@@ -93,7 +93,7 @@ function showToast(message: string, type: ToastType = 'success') {
 
 async function fetchSchedule() {
   try {
-    const response = await fetch(`${API_BASE}/api/schedule`);
+    const response = await fetch(`${DASHBOARD_API_BASE}/api/schedule`);
     if (!response.ok) throw new Error('Failed to fetch schedule');
     const data: { items?: ScheduleItem[] } = await response.json();
     return data.items || [];
@@ -107,7 +107,7 @@ async function fetchSchedule() {
 async function saveSchedule(items: ScheduleItem[]) {
   const token = getToken();
   try {
-    const response = await fetch(`${API_BASE}/api/schedule`, {
+    const response = await fetch(`${DASHBOARD_API_BASE}/api/schedule`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
