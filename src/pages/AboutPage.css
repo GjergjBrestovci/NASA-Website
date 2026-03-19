@@ -1,0 +1,540 @@
+/* ========================
+   HERO
+   ======================== */
+.about-hero {
+  position: relative;
+  min-height: 55vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9rem 2rem 5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.about-hero__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 70%, rgba(244, 114, 182, 0.1) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.about-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+}
+
+.about-hero__title {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin: 0.75rem 0 1.25rem;
+  line-height: 1.05;
+}
+
+.about-hero__subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* ========================
+   MISSION QUOTE
+   ======================== */
+.about-mission {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem 5rem;
+}
+
+.about-mission__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.about-mission__quote {
+  position: relative;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  letter-spacing: -0.02em;
+  font-style: normal;
+}
+
+.about-mission__quote::before {
+  content: '"';
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 6rem;
+  color: var(--accent-purple);
+  opacity: 0.2;
+  line-height: 1;
+  font-family: Georgia, serif;
+}
+
+.about-mission__cite {
+  display: block;
+  margin-top: 1.25rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* ========================
+   FOCUS AREAS
+   ======================== */
+.about-focus {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem 6rem;
+}
+
+.about-focus__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-focus__header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.about-focus__title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0.75rem 0;
+  letter-spacing: -0.03em;
+}
+
+.about-focus__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.about-focus-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-focus-card:hover {
+  border-color: color-mix(in srgb, var(--focus-color) 50%, transparent);
+  box-shadow: 0 0 40px color-mix(in srgb, var(--focus-color) 10%, transparent);
+}
+
+.about-focus-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--focus-color) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--focus-color) 30%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--focus-color);
+  margin-bottom: 1.25rem;
+}
+
+.about-focus-card__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+}
+
+.about-focus-card__desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ========================
+   TEAM
+   ======================== */
+.about-team {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem 6rem;
+}
+
+.about-team__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-team__header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.about-team__title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0.75rem 0;
+  letter-spacing: -0.03em;
+}
+
+/* Mentor cards */
+.about-mentors__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.about-mentor-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-mentor-card:hover {
+  border-color: color-mix(in srgb, var(--mentor-color) 60%, transparent);
+  box-shadow: 0 0 40px color-mix(in srgb, var(--mentor-color) 12%, transparent);
+}
+
+.about-mentor-card__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-purple), var(--mentor-color, var(--accent-cyan)));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+  border: 3px solid color-mix(in srgb, var(--mentor-color, var(--accent-cyan)) 30%, transparent);
+}
+
+.about-mentor-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.about-mentor-card__role {
+  font-size: 0.82rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.85rem;
+}
+
+.about-mentor-card__bio {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+.about-mentor-card__focus {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.about-mentor-card__tag {
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+/* Student grid */
+.about-students__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.about-students__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.about-student-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.about-student-card:hover {
+  border-color: var(--border-glow);
+}
+
+.about-student-card__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.about-student-card__name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.about-student-card__role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+/* ========================
+   TIMELINE
+   ======================== */
+.about-timeline {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem 6rem;
+}
+
+.about-timeline__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-timeline__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.about-timeline__title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0.75rem 0;
+  letter-spacing: -0.03em;
+}
+
+.timeline {
+  position: relative;
+}
+
+.timeline__line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--accent-purple), var(--accent-cyan), transparent);
+  transform: translateX(-50%);
+}
+
+.timeline__event {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.timeline__event--left {
+  flex-direction: row-reverse;
+  padding-left: 55%;
+}
+
+.timeline__event--right {
+  padding-right: 55%;
+}
+
+.timeline__dot {
+  position: absolute;
+  left: 50%;
+  top: 1.25rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.timeline__card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  flex: 1;
+}
+
+.timeline__date {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 0.4rem;
+}
+
+.timeline__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.timeline__desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ========================
+   SCHOOL SECTION
+   ======================== */
+.about-school {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem 8rem;
+}
+
+.about-school__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-school__card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  padding: 4rem 3rem;
+  border-radius: 28px;
+  align-items: center;
+}
+
+.about-school__content {
+  max-width: 560px;
+}
+
+.about-school__title {
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0.75rem 0 1.25rem;
+  letter-spacing: -0.03em;
+}
+
+.about-school__text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.about-school__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+/* Moon visual */
+.about-school__visual {
+  flex-shrink: 0;
+}
+
+.about-school__moon {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(255,255,255,0.12) 0%, transparent 40%),
+    radial-gradient(circle at 70% 65%, rgba(0,0,0,0.15) 0%, transparent 35%),
+    linear-gradient(135deg, #c0c8e0 0%, #8892b0 40%, #4a5568 100%);
+  box-shadow:
+    inset -20px -20px 40px rgba(0,0,0,0.4),
+    inset 8px 8px 20px rgba(255,255,255,0.1),
+    0 0 60px rgba(124, 58, 237, 0.2);
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .about-focus__grid,
+  .about-mentors__grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .timeline__event--left,
+  .timeline__event--right {
+    padding-left: 0;
+    padding-right: 0;
+    padding-left: 3rem;
+    flex-direction: row;
+  }
+
+  .timeline__line {
+    left: 6px;
+  }
+
+  .timeline__dot {
+    left: 6px;
+  }
+
+  .about-school__card {
+    grid-template-columns: 1fr;
+  }
+
+  .about-school__visual {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-students__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

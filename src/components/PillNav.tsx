@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
+import ThemeToggle from './ThemeToggle';
 import './PillNav.css';
 
 export type PillNavItem = {
@@ -258,30 +260,29 @@ const PillNav: React.FC<PillNavProps> = ({
         aria-label="Primary"
         style={cssVars}
       >
-        {items?.[0]?.href?.startsWith('#') ? (
-          <button
-            type="button"
-            aria-label="Home"
-            onMouseEnter={handleLogoEnter}
-            role="menuitem"
-            ref={el => {
-              logoRef.current = el;
-            }}
-            className="pill-nav-logo"
-            onClick={e => handleItemClick(items[0], e)}
-          />
-        ) : (
-          <a
-            href={items?.[0]?.href || '#'}
-            aria-label="Home"
-            onMouseEnter={handleLogoEnter}
-            role="menuitem"
-            ref={el => {
-              logoRef.current = el;
-            }}
-            className="pill-nav-logo"
-          />
-        )}
+        <Link
+          to="/"
+          aria-label="Moonshot Home"
+          onMouseEnter={handleLogoEnter}
+          ref={el => { logoRef.current = el; }}
+          className="pill-nav-logo"
+        >
+          <svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <circle cx="20" cy="20" r="18" stroke="url(#nl1)" strokeWidth="2" />
+            <circle cx="20" cy="20" r="8" fill="url(#nl2)" opacity="0.9" />
+            <circle cx="28" cy="12" r="3" fill="#00d4ff" opacity="0.8" />
+            <defs>
+              <linearGradient id="nl1" x1="0" y1="0" x2="40" y2="40">
+                <stop stopColor="#7c3aed" />
+                <stop offset="1" stopColor="#00d4ff" />
+              </linearGradient>
+              <linearGradient id="nl2" x1="0" y1="0" x2="20" y2="20">
+                <stop stopColor="#7c3aed" />
+                <stop offset="1" stopColor="#00d4ff" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </Link>
 
         <div ref={navItemsRef} className="pill-nav-items">
           <ul role="menubar" className="pill-nav-list">
@@ -292,6 +293,21 @@ const PillNav: React.FC<PillNavProps> = ({
                 background: 'var(--pill-bg, #fff)',
                 color: 'var(--pill-text, var(--base, #000))',
               };
+
+              const pillContent = (
+                <>
+                  <span
+                    className="hover-circle"
+                    aria-hidden="true"
+                    ref={el => { circleRefs.current[i] = el; }}
+                  />
+                  <span className="label-stack">
+                    <span className="pill-label">{item.label}</span>
+                    <span className="pill-label-hover" aria-hidden="true">{item.label}</span>
+                  </span>
+                  {isActive && <span className="pill-active-dot" aria-hidden="true" />}
+                </>
+              );
 
               return (
                 <li key={item.href} role="none" className="pill-nav-li">
@@ -306,21 +322,21 @@ const PillNav: React.FC<PillNavProps> = ({
                       onMouseLeave={() => handleLeave(i)}
                       onClick={e => handleItemClick(item, e)}
                     >
-                      <span
-                        className="hover-circle"
-                        aria-hidden="true"
-                        ref={el => {
-                          circleRefs.current[i] = el;
-                        }}
-                      />
-                      <span className="label-stack">
-                        <span className="pill-label">{item.label}</span>
-                        <span className="pill-label-hover" aria-hidden="true">
-                          {item.label}
-                        </span>
-                      </span>
-                      {isActive && <span className="pill-active-dot" aria-hidden="true" />}
+                      {pillContent}
                     </button>
+                  ) : item.href.startsWith('/') ? (
+                    <Link
+                      role="menuitem"
+                      to={item.href}
+                      className={`pill-nav-pill ${isActive ? 'is-active' : ''}`}
+                      style={pillStyle}
+                      aria-label={item.ariaLabel || item.label}
+                      onMouseEnter={() => handleEnter(i)}
+                      onMouseLeave={() => handleLeave(i)}
+                      onClick={() => { if (isMobileMenuOpen) setIsMobileMenuOpen(false); }}
+                    >
+                      {pillContent}
+                    </Link>
                   ) : (
                     <a
                       role="menuitem"
@@ -332,20 +348,7 @@ const PillNav: React.FC<PillNavProps> = ({
                       onMouseLeave={() => handleLeave(i)}
                       onClick={e => handleItemClick(item, e)}
                     >
-                      <span
-                        className="hover-circle"
-                        aria-hidden="true"
-                        ref={el => {
-                          circleRefs.current[i] = el;
-                        }}
-                      />
-                      <span className="label-stack">
-                        <span className="pill-label">{item.label}</span>
-                        <span className="pill-label-hover" aria-hidden="true">
-                          {item.label}
-                        </span>
-                      </span>
-                      {isActive && <span className="pill-active-dot" aria-hidden="true" />}
+                      {pillContent}
                     </a>
                   )}
                 </li>
@@ -354,16 +357,19 @@ const PillNav: React.FC<PillNavProps> = ({
           </ul>
         </div>
 
-        <button
-          ref={hamburgerRef}
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-          aria-expanded={isMobileMenuOpen}
-          className="pill-nav-hamburger"
-        >
-          <span className="hamburger-line" />
-          <span className="hamburger-line" />
-        </button>
+        <div className="pill-nav-right">
+          <ThemeToggle />
+          <button
+            ref={hamburgerRef}
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+            className="pill-nav-hamburger"
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
+        </div>
       </nav>
 
       <div
@@ -384,6 +390,14 @@ const PillNav: React.FC<PillNavProps> = ({
                   >
                     {item.label}
                   </button>
+                ) : item.href.startsWith('/') ? (
+                  <Link
+                    to={item.href}
+                    className={`pill-nav-mobile-link ${isActive ? 'is-active' : ''}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
                 ) : (
                   <a
                     href={item.href}

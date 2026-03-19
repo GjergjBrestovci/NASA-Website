@@ -16,13 +16,21 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(26, 20, 48, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
+  background: var(--nav-bg, rgba(6, 9, 18, 0.85));
+  border: 1px solid var(--nav-border, rgba(255, 255, 255, 0.06));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: 999px;
   padding: 10px 14px;
-  box-shadow: 0 20px 60px rgba(10, 6, 24, 0.35);
+  box-shadow: var(--shadow);
   position: relative;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.pill-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .pill-nav-logo {
@@ -156,6 +164,17 @@
 
 .pill-nav-hamburger {
   display: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: background 0.3s ease;
 }
 
 .pill-nav-hamburger .hamburger-line {
@@ -171,9 +190,67 @@
   box-shadow: 0 12px 28px rgba(10, 6, 24, 0.3);
 }
 
-.pill-nav-mobile,
-.pill-nav-mobile-list,
-.pill-nav-mobile-link,
+/* Mobile menu - hidden by default, shown via GSAP */
+.pill-nav-mobile {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
 .pill-nav-mobile.open {
-  display: none !important;
+  pointer-events: auto;
+}
+
+.pill-nav-mobile-list {
+  background: var(--nav-bg, rgba(6, 9, 18, 0.95));
+  border: 1px solid var(--nav-border, rgba(255,255,255,0.08));
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0.75rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--shadow);
+}
+
+.pill-nav-mobile-link {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pill-nav-mobile-link:hover,
+.pill-nav-mobile-link.is-active {
+  background: var(--bg-card-hover);
+  color: var(--accent-cyan);
+}
+
+/* ========================
+   RESPONSIVE
+   ======================== */
+@media (max-width: 640px) {
+  .pill-nav-items {
+    display: none;
+  }
+
+  .pill-nav-hamburger {
+    display: flex;
+  }
 }
