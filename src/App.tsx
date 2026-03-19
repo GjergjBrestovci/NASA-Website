@@ -1,73 +1,62 @@
 import React from 'react';
-import FloatingLines from './components/FloatingLines';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { ThemeProvider } from './context/ThemeContext';
 import PillNav from './components/PillNav';
-import logo from './assets/logo.svg';
-import CentralHero from './components/CentralHero';
-import AboutSection from './components/AboutSection';
-import CourseSections from './components/CourseSections';
-import usePrefersReducedMotion from './hooks/usePrefersReducedMotion';
+import StarField from './components/StarField';
+import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import BlogPage from './pages/BlogPage';
+import AboutPage from './pages/AboutPage';
+import SignUpPage from './pages/SignUpPage';
 import './App.css';
 
-const App: React.FC = () => {
-  const prefersReducedMotion = usePrefersReducedMotion();
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'About', href: '/about' },
+  { label: 'Sign Up', href: '/signup' },
+];
 
-  const floatingLinesConfig = prefersReducedMotion
-    ? {
-        lineCount: [3, 4, 5] as [number, number, number],
-        lineDistance: [12, 10, 8] as [number, number, number],
-        animationSpeed: 0.45,
-        maxPixelRatio: 0.75,
-      }
-    : {
-        lineCount: [5, 7, 9] as [number, number, number],
-        lineDistance: [10, 8, 6] as [number, number, number],
-        animationSpeed: 0.65,
-        maxPixelRatio: 1.0,
-      };
+const AppInner: React.FC = () => {
+  const location = useLocation();
 
   return (
-    <div className="app" id="top">
+    <div className="app">
+      <StarField />
       <PillNav
-        logo={logo}
-        logoAlt="Company Logo"
-        items={[
-          { label: 'Home', href: '#top' },
-          { label: 'About', href: '#about' },
-          { label: 'Team', href: '#team' },
-          { label: 'Schedule', href: '#schedule' },
-          { label: 'Join', href: '#join' },
-        ]}
-        activeHref="/"
-        className="custom-nav"
-        baseColor="#0e0a1d"
-        pillColor="#ffffff"
-        hoveredPillTextColor="#ffffff"
-        pillTextColor="#0e0a1d"
+        logo=""
+        logoAlt="Moonshot"
+        items={navItems}
+        activeHref={location.pathname}
+        className="moonshot-nav"
+        baseColor="var(--bg-primary)"
+        pillColor="var(--bg-secondary)"
+        hoveredPillTextColor="var(--accent-cyan)"
+        pillTextColor="var(--text-primary)"
       />
-      <div className="floating-lines-overlay">
-        <FloatingLines
-          enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={floatingLinesConfig.lineCount}
-          lineDistance={floatingLinesConfig.lineDistance}
-          bendRadius={3.5}
-          bendStrength={-0.35}
-          interactive={false}
-          parallax={false}
-          animationSpeed={floatingLinesConfig.animationSpeed}
-          parallaxStrength={0}
-          linesGradient={['#f5a8e1', '#6569cc']}
-          maxPixelRatio={floatingLinesConfig.maxPixelRatio}
-          antialias={false}
-        />
-      </div>
 
-      <div className="app-content">
-        <CentralHero />
-        <AboutSection disableAnimations={prefersReducedMotion} />
-        <CourseSections />
-      </div>
+      <AnimatePresence mode="wait" initial={false}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+        </Routes>
+      </AnimatePresence>
+
+      <Footer />
     </div>
   );
 };
+
+const App: React.FC = () => (
+  <ThemeProvider>
+    <BrowserRouter>
+      <AppInner />
+    </BrowserRouter>
+  </ThemeProvider>
+);
 
 export default App;
